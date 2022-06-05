@@ -1,6 +1,9 @@
 package boot.spring.controller;
 
 import javax.servlet.http.HttpSession;
+
+import boot.spring.po.Staff;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,10 +26,12 @@ public class Login {
 	public String loginvalidate(@RequestParam("username") String username,@RequestParam("password") String pwd,HttpSession httpSession){
 		if(username==null)
 			return "login";
-		String realpwd=loginservice.getpwdbyname(username);
-		if(realpwd!=null&&pwd.equals(realpwd))
+		LambdaQueryWrapper<Staff> queryWrapper = new LambdaQueryWrapper<>();
+		queryWrapper.eq(Staff::getUsername,username);
+		Staff emp = loginservice.getOne(queryWrapper);
+		if(emp!=null&&pwd.equals(emp.getPassword()))
 		{
-			long uid=loginservice.getUidbyname(username);
+			int uid=emp.getId();
 			httpSession.setAttribute("uid", uid);
 			return "chatroom";
 		}else
@@ -46,8 +51,9 @@ public class Login {
 	@RequestMapping(value="/currentuser",method = RequestMethod.GET)
 	@ResponseBody
 	public User currentuser(HttpSession httpSession){
-		Long uid = (Long)httpSession.getAttribute("uid");
-		String name = loginservice.getnamebyid(uid);
+		int uid = (int)httpSession.getAttribute("uid");
+		Staff staff = loginservice.getById(uid);
+		String name=staff.getUsername();
 		return new User(uid, name);
 	}
   }

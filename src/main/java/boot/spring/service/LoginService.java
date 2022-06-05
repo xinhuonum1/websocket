@@ -1,8 +1,8 @@
 package boot.spring.service;
 
 
-public interface LoginService {
-	String getpwdbyname(String name);
-	Long getUidbyname(String name);
-	String getnamebyid(long id);
+import boot.spring.po.Staff;
+import com.baomidou.mybatisplus.extension.service.IService;
+
+public interface LoginService extends IService<Staff> {
 }

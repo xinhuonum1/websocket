@@ -1,8 +1,9 @@
 package boot.spring.mapper;
 
 import boot.spring.po.Staff;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 
-public interface LoginMapper {
-	Staff getpwdbyname(String name);
-	Staff getnamebyid(long id);
+@Mapper
+public interface LoginMapper extends BaseMapper<Staff> {
 }

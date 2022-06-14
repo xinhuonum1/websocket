@@ -43,15 +43,15 @@ public class ChatController {
 	}
 
 
-	@RequestMapping("getuid")
-	@ResponseBody
-	public User getuid(@RequestParam("username") String username) {
-		LambdaQueryWrapper<Staff> queryWrapper = new LambdaQueryWrapper<>();
-		queryWrapper.eq(Staff::getUsername,username);
-		Staff emp = loginservice.getOne(queryWrapper);
-		int a=emp.getId();
-		User u = new User();
-		u.setUid(a);
-		return u;
-	}
+//	@RequestMapping("getuid")
+//	@ResponseBody
+//	public User getuid(@RequestParam("username") String username) {
+//		LambdaQueryWrapper<Staff> queryWrapper = new LambdaQueryWrapper<>();
+//		queryWrapper.eq(Staff::getUsername,username);
+//		Staff emp = loginservice.getOne(queryWrapper);
+//		int a=emp.getId();
+//		User u = new User();
+//		u.setUid(a);
+//		return u;
+//	}
 }

@@ -1,5 +1,6 @@
 package boot.spring.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import boot.spring.po.Staff;
@@ -22,7 +23,7 @@ public class Login {
 	@Autowired
 	LoginService loginservice;
 	
-	@RequestMapping("/loginvalidate")
+	@RequestMapping(value="/loginvalidate",method=RequestMethod.POST)
 	public String loginvalidate(@RequestParam("username") String username,@RequestParam("password") String pwd,HttpSession httpSession){
 		if(username==null)
 			return "login";
@@ -38,13 +39,14 @@ public class Login {
 			return "fail";
 	}
 	
-	@RequestMapping("/login")
+	@RequestMapping(value="/login",method = RequestMethod.GET)
 	public String login(){
 		return "login";
 	}
 	
-	@RequestMapping("/logout")
-	public String logout(HttpSession httpSession){
+	@RequestMapping(value="/logout",method = RequestMethod.GET)
+	public String logout(HttpServletRequest request){
+        request.getSession().removeAttribute("uid");
 		return "login";
 	}
 	
@@ -56,4 +58,4 @@ public class Login {
 		String name=staff.getUsername();
 		return new User(uid, name);
 	}
-  }
+}

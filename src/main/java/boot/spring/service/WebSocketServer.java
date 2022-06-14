@@ -29,7 +29,7 @@ public class WebSocketServer {
     private static ConcurrentHashMap<String, Session> sessionPools = new ConcurrentHashMap<>();
 
     //发送消息
-    public void sendMessage(Session session, String message) throws IOException {
+    private void sendMessage(Session session, String message) throws IOException {
         if(session != null){
             synchronized (session) {
                 System.out.println("发送数据：" + message);
@@ -38,7 +38,7 @@ public class WebSocketServer {
         }
     }
     //给指定用户发送信息
-    public void sendInfo(String userName, String message){
+    private void sendInfo(String userName, String message){
         Session session = sessionPools.get(userName);
         try {
             sendMessage(session, message);
@@ -47,13 +47,12 @@ public class WebSocketServer {
         }
     }
     // 群发消息
-    public void broadcast(String message){
+    private void broadcast(String message){
     	for (Session session: sessionPools.values()) {
             try {
                 sendMessage(session, message);
             } catch(Exception e){
                 e.printStackTrace();
-                continue;
             }
         }
     }
@@ -107,11 +106,11 @@ public class WebSocketServer {
         throwable.printStackTrace();
     }
 
-    public static void addOnlineCount(){
+    private static void addOnlineCount(){
         onlineNum.incrementAndGet();
     }
 
-    public static void subOnlineCount() {
+    private static void subOnlineCount() {
         onlineNum.decrementAndGet();
     }
     
